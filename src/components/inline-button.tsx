@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 
-export const InlineButton = ({ title = 'Unnamed' }) => {
+export const InlineButton = ({ title }: { title: string }) => {
   return (
     <Pressable
       style={({ pressed }) => [

@@ -1,18 +1,20 @@
-// TODO: find a solution for icon names
 import React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
 export const Input = ({
-  icon = 'arrow-right-circle',
-  placeholder = '',
+  icon,
+  placeholder,
   secure = false,
+}: {
+  icon: 'user' | 'lock';
+  placeholder: string;
+  secure?: boolean;
 }) => {
   return (
     <View style={styles.inputRow}>
       <SimpleLineIcons
         style={styles.icon}
-        // @ts-ignore
         name={icon}
         size={24}
         color="black"

@@ -6,7 +6,6 @@ import { Button } from './src/components/button';
 import { InlineButton } from './src/components/inline-button';
 import { Input } from './src/components/input';
 
-// @ts-ignore
 import loginBackground from './assets/login-background.jpg';
 
 export default function App() {
@@ -16,7 +15,7 @@ export default function App() {
         source={loginBackground}
         resizeMode="cover"
         style={styles.background}
-      ></Image>
+      />
       <Text style={styles.title}>Welcome</Text>
       <View style={styles.login}>
         <View style={styles.header}>
@@ -24,7 +23,7 @@ export default function App() {
           <InlineButton title="SIGN UP" />
         </View>
         <Input icon="user" placeholder="Login" />
-        <Input icon="lock" placeholder="Password" secure={true} />
+        <Input icon="lock" placeholder="Password" secure />
         <InlineButton title="Forget Password?" />
         <Button title="Login" customStyle={styles.button} />
       </View>

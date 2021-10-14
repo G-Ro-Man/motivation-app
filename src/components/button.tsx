@@ -1,7 +1,13 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 
-export const Button = ({ title = 'Button', customStyle = {} }) => {
+export const Button = ({
+  title,
+  customStyle = {},
+}: {
+  title: string;
+  customStyle?: object;
+}) => {
   return (
     <Pressable
       style={({ pressed }) => [
