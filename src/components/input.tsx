@@ -2,15 +2,13 @@ import React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
-export const Input = ({
-  icon,
-  placeholder,
-  secure = false,
-}: {
+interface Props {
   icon: 'user' | 'lock';
   placeholder: string;
   secure?: boolean;
-}) => {
+}
+
+export const Input = ({ icon, placeholder, secure = false }: Props) => {
   return (
     <View style={styles.inputRow}>
       <SimpleLineIcons

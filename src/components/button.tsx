@@ -1,30 +1,39 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 
-export const Button = ({
-  title,
-  customStyle = {},
-}: {
+interface Props {
   title: string;
-  customStyle?: object;
-}) => {
-  return (
-    <Pressable
-      style={({ pressed }) => [
-        {
-          backgroundColor: pressed ? '#208efb' : '#047CF4',
-        },
-        styles.button,
-        customStyle,
-      ]}
-    >
-      <Text style={styles.text}>{title}</Text>
-    </Pressable>
-  );
-};
+  customStyle?: StyleProp<ViewStyle>;
+}
 
-const styles = StyleSheet.create({
-  text: {
+interface Styles {
+  button: ViewStyle;
+  title: TextStyle;
+}
+
+export const Button = ({ title, customStyle = {} }: Props) => (
+  <Pressable
+    style={({ pressed }) => [
+      {
+        backgroundColor: pressed ? '#208efb' : '#047CF4',
+      },
+      styles.button,
+      customStyle,
+    ]}
+  >
+    <Text style={styles.title}>{title}</Text>
+  </Pressable>
+);
+
+const styles = StyleSheet.create<Styles>({
+  title: {
     color: '#ffffff',
     textTransform: 'uppercase',
     fontSize: 16,
