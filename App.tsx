@@ -7,55 +7,60 @@ import { SettingsScreen } from './src/features/settings';
 import { SwiperScreen } from './src/features/swiper';
 
 import { TabBarIcon } from './src/components/tab-bar-icon';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Tab = createBottomTabNavigator();
+
+const HomeTabs = () => (
+  <Tab.Navigator
+    screenOptions={({ route }) => ({
+      tabBarShowLabel: false,
+      headerShown: false,
+    })}
+  >
+    <Tab.Screen
+      name="Swiper"
+      component={SwiperScreen}
+      options={{
+        tabBarIcon: ({ focused }) => (
+          <TabBarIcon name="fire" focused={focused} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Settings"
+      component={SettingsScreen}
+      options={{
+        tabBarIcon: ({ focused }) => (
+          <TabBarIcon name="settings" focused={focused} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Profile"
+      component={ProfileScreen}
+      options={{
+        tabBarIcon: ({ focused }) => (
+          <TabBarIcon name="ghost" focused={focused} />
+        ),
+      }}
+    />
+  </Tab.Navigator>
+);
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator
+      <Stack.Navigator
         screenOptions={({ route }) => ({
-          tabBarShowLabel: false,
           headerShown: false,
         })}
       >
-        <Tab.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <TabBarIcon name="login" focused={focused} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={ProfileScreen}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <TabBarIcon name="ghost" focused={focused} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Settings"
-          component={SettingsScreen}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <TabBarIcon name="settings" focused={focused} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Swiper"
-          component={SwiperScreen}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <TabBarIcon name="fire" focused={focused} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
+        <Stack.Screen name="Home" component={HomeTabs} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

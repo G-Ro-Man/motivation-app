@@ -1,7 +1,9 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, PressableProps, StyleSheet, Text } from 'react-native';
 
-export const InlineButton = ({ title }: { title: string }) => {
+type InlineButtonProps = { title: string; onPress?: PressableProps['onPress'] };
+
+export const InlineButton = ({ title, onPress }: InlineButtonProps) => {
   return (
     <Pressable
       style={({ pressed }) => [
@@ -10,6 +12,7 @@ export const InlineButton = ({ title }: { title: string }) => {
         },
         styles.button,
       ]}
+      onPress={onPress}
     >
       <Text style={styles.text}>{title}</Text>
     </Pressable>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { Button } from './components/button';
 import { InlineButton } from './components/inline-button';
@@ -8,7 +9,15 @@ import { Input } from './components/input';
 
 import loginBackground from '../../../assets/login-background.jpg';
 
-export const LoginScreen = () => (
+type RootStackParamList = {
+  Swiper: undefined;
+  Profile: undefined;
+  Settings: undefined;
+};
+
+type Props = NativeStackScreenProps<RootStackParamList>;
+
+export const LoginScreen = ({ navigation }: Props) => (
   <SafeAreaView style={styles.container}>
     <Image
       source={loginBackground}
@@ -24,6 +33,7 @@ export const LoginScreen = () => (
       <Input icon="user" placeholder="Login" />
       <Input icon="lock" placeholder="Password" secure />
       <InlineButton title="Forget Password?" />
+      <InlineButton title="Go back" onPress={() => navigation.goBack()} />
       <Button title="Login" customStyle={styles.button} />
     </View>
     <View style={styles.footer}>
