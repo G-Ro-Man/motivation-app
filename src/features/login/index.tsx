@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { Button } from './components/button';
 import { InlineButton } from './components/inline-button';
-import { Input } from './components/input';
+import { Input } from '../../components/input';
 
 import loginBackground from '../../../assets/login-background.jpg';
 
@@ -16,43 +16,64 @@ type RootStackParamList = {
 };
 
 type Props = NativeStackScreenProps<RootStackParamList>;
+const loginRule = /^[\w.-]+$/;
+const passwordRule = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[\da-zA-Z]{8,}$/;
+// password at least 8 characters which contain at least one numeric digit, one uppercase and one lowercase letter
 
-export const LoginScreen = ({ navigation }: Props) => (
-  <SafeAreaView style={styles.container}>
-    <Image
-      source={loginBackground}
-      resizeMode="cover"
-      style={styles.background}
-    />
-    <Text style={styles.title}>Welcome</Text>
-    <View style={styles.login}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Login</Text>
-        <InlineButton title="SIGN UP" />
+export const LoginScreen = ({ navigation }: Props) => {
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <Image
+        source={loginBackground}
+        resizeMode="cover"
+        style={styles.background}
+      />
+      <Text style={styles.title}>Welcome</Text>
+      <View style={styles.login}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Login</Text>
+          <InlineButton title="SIGN UP" />
+        </View>
+        <Input
+          icon="user"
+          placeholder="Login"
+          rule={loginRule}
+          value={login}
+          onChangeText={setLogin}
+        />
+        <Input
+          icon="lock"
+          placeholder="Password"
+          rule={passwordRule}
+          value={password}
+          onChangeText={setPassword}
+          secure
+        />
+        <InlineButton title="Forget Password?" />
+        <InlineButton title="Go back" onPress={() => navigation.goBack()} />
+        <Button title="Login" customStyle={styles.button} />
       </View>
-      <Input icon="user" placeholder="Login" />
-      <Input icon="lock" placeholder="Password" secure />
-      <InlineButton title="Forget Password?" />
-      <InlineButton title="Go back" onPress={() => navigation.goBack()} />
-      <Button title="Login" customStyle={styles.button} />
-    </View>
-    <View style={styles.footer}>
-      <Text>Login with:</Text>
-      <SimpleLineIcons
-        style={styles.social}
-        name="social-facebook"
-        size={24}
-        color="black"
-      />
-      <SimpleLineIcons
-        style={styles.social}
-        name="social-google"
-        size={24}
-        color="black"
-      />
-    </View>
-  </SafeAreaView>
-);
+      <View style={styles.footer}>
+        <Text>Login with:</Text>
+        <SimpleLineIcons
+          style={styles.social}
+          name="social-facebook"
+          size={24}
+          color="black"
+        />
+        <SimpleLineIcons
+          style={styles.social}
+          name="social-google"
+          size={24}
+          color="black"
+        />
+      </View>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
