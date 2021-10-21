@@ -3,7 +3,7 @@ import { StyleSheet, TextInput, View } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
 interface Props {
-  icon: 'user' | 'lock';
+  icon: React.ComponentProps<typeof SimpleLineIcons>['name'];
   placeholder: string;
   secure?: boolean;
 }

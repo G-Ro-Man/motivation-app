@@ -5,7 +5,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { Button } from './components/button';
 import { InlineButton } from './components/inline-button';
-import { Input } from './components/input';
+import { Input } from '../../components/input';
 
 import loginBackground from '../../../assets/login-background.jpg';
 
