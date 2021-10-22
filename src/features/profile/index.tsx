@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
+
 import { Input } from '../../components/input';
 
 import loginBackground from '../../../assets/login-background.jpg';
@@ -122,6 +123,7 @@ export const ProfileScreen = () => {
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

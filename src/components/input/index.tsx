@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginVertical: 8,
     width: '100%',
+
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
   },
   errorStyle: {
     borderColor: '#f77f7f',
+
   },
   input: {
     paddingLeft: 50,
