@@ -37,20 +37,17 @@ export const ProfileScreen = () => {
 
   useEffect(() => {
     (async () => {
-      if (Platform.OS !== 'web') {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== 'granted') {
-          alert('Sorry, we need camera roll permissions to make this work!');
-        }
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
       }
     })();
   }, []);
 
   const pickImage = async () => {
     let permission = await ImagePicker.getMediaLibraryPermissionsAsync();
-    console.log('permission: ', permission);
-    if (permission.status !== 'denied') {
+    if (permission.granted) {
       let result = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
         aspect: [1, 1],
@@ -58,13 +55,12 @@ export const ProfileScreen = () => {
         limited: true,
         accessPrivileges: 'limited',
       });
-      console.log(result);
 
       if (!result.cancelled) {
         setImage(result.uri);
       }
     } else {
-      alert('Sorry, we need camera roll permissions to make this work!');
+      alert('Sorry, we need library permissions to make this work!');
     }
   };
 
@@ -79,9 +75,7 @@ export const ProfileScreen = () => {
         <View style={styles.header}>
           <Text style={styles.title}>Profile</Text>
         </View>
-        <View
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-        >
+        <View style={styles.avatarContainer}>
           <Pressable onPress={pickImage} style={styles.avatarButton}>
             <Image
               source={image ? { uri: image } : defaultUserImage}
@@ -182,6 +176,11 @@ const styles = StyleSheet.create({
   activityCount: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  avatarContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   avatarButton: {
     width: 210,

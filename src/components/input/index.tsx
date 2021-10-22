@@ -26,7 +26,7 @@ export const Input = ({
   const [isError, setIsError] = useState(false);
 
   const _onChangeText = (value: string) => {
-    onChangeText && onChangeText(value);
+    onChangeText(value);
     setIsError(!rule.test(value));
   };
 
