@@ -1,26 +1,50 @@
-import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, TextInput, View, ViewStyle } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
-interface Props {
+interface InputProps {
   icon: React.ComponentProps<typeof SimpleLineIcons>['name'];
+  inputRef?: React.RefObject<TextInput>;
+  onChangeText: (value: string) => void;
   placeholder: string;
+  rule: RegExp;
   secure?: boolean;
+  style?: ViewStyle;
+  value: string;
 }
 
-export const Input = ({ icon, placeholder, secure = false }: Props) => {
+export const Input = ({
+  icon,
+  inputRef,
+  onChangeText,
+  placeholder,
+  rule,
+  secure = false,
+  style,
+  value,
+}: InputProps) => {
+  const [isError, setIsError] = useState(false);
+
+  const _onChangeText = (value: string) => {
+    onChangeText(value);
+    setIsError(!rule.test(value));
+  };
+
   return (
-    <View style={styles.inputRow}>
+    <View style={[styles.inputRow, isError && styles.errorStyle, style]}>
       <SimpleLineIcons
-        style={styles.icon}
+        color="black"
         name={icon}
         size={24}
-        color="black"
+        style={styles.icon}
       />
       <TextInput
-        style={styles.input}
         placeholder={placeholder}
+        ref={inputRef}
         secureTextEntry={secure}
+        style={styles.input}
+        value={value}
+        onChangeText={_onChangeText}
       />
     </View>
   );
@@ -28,10 +52,13 @@ export const Input = ({ icon, placeholder, secure = false }: Props) => {
 
 const styles = StyleSheet.create({
   inputRow: {
-    width: '100%',
-    height: 50,
     backgroundColor: '#fff',
     borderRadius: 16,
+    height: 50,
+    justifyContent: 'center',
+    marginVertical: 8,
+    width: '100%',
+
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -39,10 +66,13 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
-
     elevation: 6,
-    marginVertical: 8,
-    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+  errorStyle: {
+    borderColor: '#f77f7f',
+
   },
   input: {
     paddingLeft: 50,
