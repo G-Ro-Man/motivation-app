@@ -3,7 +3,7 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 
 interface Props {
   focused: boolean;
-  name: 'login' | 'ghost' | 'settings' | 'fire';
+  name: React.ComponentProps<typeof SimpleLineIcons>['name'];
 }
 
 export const TabBarIcon = ({ focused, name }: Props) => {
