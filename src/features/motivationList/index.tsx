@@ -24,7 +24,7 @@ interface ListItemProps {
   };
 }
 
-const _keyExtractor = (item: object, index: number) => index.toString();
+const keyExtractor = (item: object, index: number) => index.toString();
 
 export const MotivationListScreen = () => {
   const [users, setUsers] = useState([]);
@@ -34,28 +34,34 @@ export const MotivationListScreen = () => {
   const ref: RefObject<FlatList> = useRef(null);
 
   useEffect(() => {
-    getUsers(20, 1, setUsers);
+    async function fetchUsers() {
+      const response = await getUsers(20, page);
+      setUsers(response);
+    }
+    fetchUsers();
   }, []);
 
-  const _onRefresh = async () => {
+  const onRefresh = async () => {
     setRefreshing(true);
-    await getUsers(20, 2, setUsers);
+    const newUsers = await getUsers(20, 2);
+    setUsers(newUsers);
     setPage(2);
     setRefreshing(false);
   };
 
-  const _renderItem = useCallback(
+  const renderItem = useCallback(
     ({ item }: ListItemProps) => (
       <ListItem name={item.name} picture={item.picture} />
     ),
     []
   );
 
-  const _onEndReached = () => {
-    const getNewUsers = (newUsers: any) => {
+  const onEndReached = async () => {
+    const newUsers: [] = await getUsers(20, page + 1);
+    const showMoreUsers = () => {
       setUsers(users.concat(newUsers));
     };
-    getUsers(20, page + 1, getNewUsers);
+    showMoreUsers();
     setPage(page + 1);
   };
 
@@ -64,11 +70,11 @@ export const MotivationListScreen = () => {
       <FlatList
         ref={ref}
         data={users}
-        renderItem={_renderItem}
-        keyExtractor={_keyExtractor}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
         refreshing={refreshing}
-        onRefresh={_onRefresh}
-        onEndReached={_onEndReached}
+        onRefresh={onRefresh}
+        onEndReached={onEndReached}
         initialNumToRender={10}
         windowSize={5}
       />
