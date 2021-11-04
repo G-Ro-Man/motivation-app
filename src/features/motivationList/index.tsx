@@ -5,7 +5,14 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { FlatList, SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import {
+  FlatList,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { getUsers } from '../../utils/random-user';
 import { ListItem } from './ListItem';
 
@@ -56,6 +63,12 @@ export const MotivationListScreen = () => {
     []
   );
 
+  const emptyList = () => (
+    <View style={styles.emptyView}>
+      <Text> There are no users</Text>
+    </View>
+  );
+
   const onEndReached = async () => {
     const newUsers: [] = await getUsers(20, page + 1);
     const showMoreUsers = () => {
@@ -77,6 +90,7 @@ export const MotivationListScreen = () => {
         onEndReached={onEndReached}
         initialNumToRender={10}
         windowSize={5}
+        ListEmptyComponent={emptyList}
       />
     </SafeAreaView>
   );
@@ -86,5 +100,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
+  },
+  emptyView: {
+    paddingTop: 15,
+    alignItems: 'center',
   },
 });
